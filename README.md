@@ -1,8 +1,8 @@
-# Projetos Python3
+# Python 3 Projects
 
-**Meus projetos feitos na linguagem Python**
+**My projects made in Python 3**
 
-Bibliotecas necessárias:
+Required libraries:
 - PyQt5
 - requests
 - clipboard
