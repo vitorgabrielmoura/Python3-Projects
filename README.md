@@ -6,3 +6,4 @@ Required libraries:
 - PyQt5
 - requests
 - clipboard
+- Pymysql
