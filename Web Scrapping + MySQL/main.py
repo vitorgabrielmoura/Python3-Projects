@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pymysql
 
----- GET DATA FROM AMAZON WITHLIST BOOKS AND PUT INTO MYSQL DATABASE ----
+#---- GET DATA FROM AMAZON WITHLIST BOOKS AND PUT INTO MYSQL DATABASE ----
 
 # get the html code from the page
 page = requests.get('https://www.amazon.com.br/hz/wishlist/ls/1QPZQPIXMAFL?ref_=wl_share')
