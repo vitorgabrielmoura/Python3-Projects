@@ -7,3 +7,4 @@ Required libraries:
 - requests
 - clipboard
 - Pymysql
+- BeatifulSoup4
