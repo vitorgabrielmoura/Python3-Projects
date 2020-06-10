@@ -12,8 +12,10 @@ soup = BeautifulSoup(page.text, 'html.parser')
 bookname = soup.find_all('h3')
 bookauthor = soup.find_all("span", class_='a-size-small a-color-tertiary')
 photos = soup.find_all('img')
-price1 = soup.find_all('span', class_='a-price-whole')
-price2 = soup.find_all('span', class_='a-price-fraction')
+price1 = soup.find_all('span', class_=('a-price-whole','a-size-base a-color-price awl-item-availability-msg'))
+price2 = soup.find_all('span', class_=('a-price-fraction', 'a-size-base a-color-price awl-item-availability-msg'))
+dbbooknamelist = list()
+booknamelist = list()
 
 try:
     # make connection to database
@@ -25,31 +27,53 @@ try:
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor)
 
-    for x in range(len(photos)):
-        if x < 8:
-            continue
+    # put the db data into an list
+    with conexao.cursor() as c:
+        c.execute('SELECT nome FROM livros')
+        result = c.fetchall()
+        for x in result:
+            dbbooknamelist.append(x['nome'])
 
-        i = x - 8
+    for x in range(len(bookauthor)):
 
         # set the variables with the content of the book
-        name = bookname[i].text
-        author = bookauthor[i].text
-        price = f'{price1[i].text}{price2[i].text}'.replace(',', '.')
+        name = bookname[x].text
+        author = bookauthor[x].text
 
-        # acess the html of the image and make a newfile with the name of the book
-        urlimg = photos[x]['src']
+        if price1[x].text == 'Não disponível.':
+            price = 'NA'
+        else:
+            price = f'{price1[x].text}{price2[x].text}'.replace(',', '.')
+
+        #add all current withlist book names to an list
+        booknamelist.append(name)
+
+        # acess the html of the image and make a newfile.jpg with the name of the book
+        urlimg = photos[x+8]['src']
         page = requests.get(urlimg)
-        with open(f'images/{bookname[i].text[:10]}.jpg', 'wb') as f:
+        with open(f'images/{bookname[x].text[:10]}.jpg', 'wb') as f:
             f.write(page.content)
 
-        #insert all the date into database
         with conexao.cursor() as c:
+            # verify if the data does not already exist
+            if name in dbbooknamelist:
+                continue
+
+            #insert data into database
             sql = 'INSERT INTO livros (nome, autor, preco, imagem) VALUES (%s, %s, %s, %s)'
             c.execute(sql, (name, author, price, f'LOAD_FILE("images/{name[:10]}.jpg")'))
             conexao.commit()
 
+    #delete items that does not exist anymore in the withlist but are in db
+    with conexao.cursor() as c:
+        for x in dbbooknamelist:
+            if x not in booknamelist:
+                c.execute(f"DELETE FROM livros WHERE nome = '{x}' LIMIT 1")
+                conexao.commit()
+
     conexao.close()
-except IndexError:
-    pass
+
+except IndexError as l:
+     print(f'ERROR: {l} - {type(l)}')
 except Exception as e:
-    print(e, type(e))
+    print(f'ERROR: {e} - {type(e)}')
