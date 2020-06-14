@@ -1,0 +1,59 @@
+@charset "UTF-8";
+@font-face{
+    font-family: 'FontSubtitle'
+    src: url("site-resources/openSans.ttf");
+}
+
+header{
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    background-color: rgba(156, 3, 3, 1);
+    padding: 2px;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -7px;
+    margin-bottom: 0px;
+    border-bottom: 4px solid white;
+}
+
+header h1#title{
+    font-size: 13px;
+    font-family: 'FontSubtitle', sans-serif;
+    color: rgba(0, 0, 0, 0.77);
+    font-weight: 800;
+}
+
+header img#amazonlogo{
+    position: relative;
+    bottom: -10px;
+    align: center;
+}
+
+div#interface{
+    background-color: rgba(47, 124, 247, 1);
+    width: 1100px;
+    margin: 20px auto 20px auto;
+    padding: 10px;
+    margin-top: 0px;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+}
+
+body{
+    background-color: rgba(47, 124, 247, 0.7);
+}
+
+body h1{
+    font-size: 20px;
+}
+
+body h2{
+    font-size: 15px;
+}
+
+body h3{
+    font-size: 15px;
+}
+
+

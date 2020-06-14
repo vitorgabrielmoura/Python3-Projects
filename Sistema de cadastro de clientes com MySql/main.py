@@ -10,6 +10,7 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QTableWidgetItem, QLineEdit
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import QSize
+import PyQt5.QtCore
 
 import pymysql.cursors
 
@@ -156,7 +157,7 @@ class Principal(QMainWindow, Ui_MainWindow):
             cursorclass=pymysql.cursors.DictCursor)
 
         with self.conexao.cursor() as c:
-            _translate = QtCore.QCoreApplication.translate
+            _translate = PyQt5.QtCore.QCoreApplication.translate
             try:
                 c.execute('SELECT nome, telefone, email FROM clientes')
                 resultado = c.fetchall()
@@ -316,6 +317,7 @@ class Principal(QMainWindow, Ui_MainWindow):
             self.lc = JanelaListarCliente()
             self.lc.show()
 
+            self.lc.tableWidget.setDisabled(True)
             self.lc.btnAtualizar.clicked.connect(self.atualizar_servicos)
 
         except Exception as e:
