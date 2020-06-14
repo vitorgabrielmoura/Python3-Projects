@@ -43,7 +43,7 @@ try:
         if price1[x].text == 'Não disponível.':
             price = 'NA'
         else:
-            price = f'{price1[x].text}{price2[x].text}'.replace(',', '.')
+            price = f'R${price1[x].text}{price2[x].text}'.replace(',', '.')
 
         #add all current withlist book names to an list
         booknamelist.append(name)
@@ -55,8 +55,10 @@ try:
             f.write(page.content)
 
         with conexao.cursor() as c:
-            # verify if the data does not already exist
+            # verify if the data does not already exist and if exist update the price
             if name in dbbooknamelist:
+                c.execute(f"UPDATE livros set preco='{price}' WHERE nome='{name}'")
+                conexao.commit()
                 continue
 
             #insert data into database
