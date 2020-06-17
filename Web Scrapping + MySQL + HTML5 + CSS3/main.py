@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pymysql
+import os
 
 #---- GET DATA FROM AMAZON WITHLIST BOOKS AND PUT INTO MYSQL DATABASE ----
 
@@ -72,6 +73,7 @@ try:
             if x not in booknamelist:
                 c.execute(f"DELETE FROM livros WHERE nome = '{x}' LIMIT 1")
                 conexao.commit()
+                os.remove(f'images/{x[:10]}.jpg')
 
     conexao.close()
 

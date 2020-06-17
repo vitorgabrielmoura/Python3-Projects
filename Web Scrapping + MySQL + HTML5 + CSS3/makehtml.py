@@ -28,7 +28,15 @@ with open('index.html', 'w+') as d:
     </hgroup>
     </header>
     <div id="interface">
-    <h1 id="xesque"><a href="https://www.amazon.com.br/hz/wishlist/ls/1QPZQPIXMAFL?ref_=wl_share " target="_blank">My Amazon Withlist</a></h1>
+    <nav id="menu">
+    <h1>Main Menu</h1>
+    <ul>
+        <li><a href="index.html">Main<br>List</a></li>
+        <li>Test<br>List</li>
+        <li><a id="teste" href="https://www.amazon.com.br/hz/wishlist/ls/1QPZQPIXMAFL?ref_=wl_share " target="_blank">Go to<br>Amazon</a></li>
+    </ul>
+    </nav>
+    <h1 id="xesque"><a id="titulo" href="https://www.amazon.com.br/hz/wishlist/ls/1QPZQPIXMAFL?ref_=wl_share " target="_blank">My Amazon Withlist</a></h1>
     <h4>Last time updated by Vitu was in 15/06/2020</h4>
     <ul id="books" style="list-style-type:none">""")
     for x in result:
@@ -37,7 +45,7 @@ with open('index.html', 'w+') as d:
         <li id="data"><ul>
         <li><h1>{x['nome']}</h1></li>
         <li><h2>{x['autor']}</h2></li>
-        <li><h3>{x['preco']}</h3></li>
+        <li id="preco"><h3>{x['preco']}</h3></li>
         </ul>
         </li>
         <div id= "line"></div>
